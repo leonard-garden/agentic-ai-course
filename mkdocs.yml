@@ -1,0 +1,141 @@
+site_name: Master Claude Code & Agentic AI
+site_description: Lộ trình trở thành AI Engineer trong Anthropic ecosystem — dành cho Java Backend Engineer
+site_author: Leonard Trinh
+site_url: https://leonard-garden.github.io/agentic-ai-course
+
+repo_name: leonard-garden/agentic-ai-course
+repo_url: https://github.com/leonard-garden/agentic-ai-course
+
+docs_dir: course
+theme:
+  name: material
+  language: vi
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/robot
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      lang: en
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/leonardtrinh
+
+nav:
+  - Trang chủ: README.md
+
+  - "Module 00 — Foundation":
+    - Tổng quan: module-00-foundation/README.md
+    - "Lesson 01: Mental Model": module-00-foundation/lessons/01-mental-model.md
+    - "Lesson 02: Anthropic Ecosystem": module-00-foundation/lessons/02-anthropic-ecosystem.md
+    - "Lesson 03: Thiết lập môi trường": module-00-foundation/lessons/03-setup.md
+
+  - "Module 01 — Claude API Java":
+    - Tổng quan: module-01-claude-api-java/README.md
+    - "Lesson 01: Setup & First API Call": module-01-claude-api-java/lessons/01-setup.md
+    - "Lesson 02: Messages & Streaming": module-01-claude-api-java/lessons/02-messages-and-streaming.md
+    - "Lesson 03: Tool Use": module-01-claude-api-java/lessons/03-tool-use.md
+    - "Lesson 04: Prompt Engineering": module-01-claude-api-java/lessons/04-prompt-engineering.md
+    - "Project: AI Database Assistant": module-01-claude-api-java/exercises/project-ai-database-assistant.md
+
+  - "Module 02 — Claude Code":
+    - Tổng quan: module-02-claude-code/README.md
+    - "Lesson 01: Claude Code Architecture": module-02-claude-code/lessons/01-claude-code-architecture.md
+    - "Lesson 02: Custom Subagents": module-02-claude-code/lessons/02-custom-subagents.md
+    - "Lesson 03: Agent SDK": module-02-claude-code/lessons/03-agent-sdk.md
+    - "Lesson 04: Workflows & Automation": module-02-claude-code/lessons/04-claude-code-workflows.md
+
+  - "Module 03 — MCP":
+    - Tổng quan: module-03-mcp/README.md
+    - "Lesson 01: MCP Concepts": module-03-mcp/lessons/01-mcp-concepts.md
+    - "Lesson 02: Consuming MCP Servers": module-03-mcp/lessons/02-consuming-mcp-servers.md
+    - "Lesson 03: Build Java MCP Server": module-03-mcp/lessons/03-building-mcp-server-java.md
+    - "Project: Enterprise MCP Suite": module-03-mcp/exercises/project-enterprise-mcp-suite.md
+
+  - "Module 04 — Multi-Agent":
+    - Tổng quan: module-04-multi-agent/README.md
+    - "Lesson 01: Orchestrator-Worker": module-04-multi-agent/lessons/01-orchestrator-worker-pattern.md
+    - "Lesson 02: Model Routing": module-04-multi-agent/lessons/02-model-routing-strategy.md
+    - "Lesson 03: Failure Modes & Production": module-04-multi-agent/lessons/03-failure-modes-and-production.md
+    - "Lesson 04: Evaluator-Optimizer": module-04-multi-agent/lessons/04-evaluator-optimizer-pattern.md
+    - "Project: Java Review Pipeline": module-04-multi-agent/exercises/project-java-review-pipeline.md
+
+  - "Module 05 — Portfolio":
+    - Tổng quan: module-05-portfolio/README.md
+    - "Career Path & Market": module-05-portfolio/lessons/01-career-path.md
+    - "Project 1: Enterprise MCP Suite": module-05-portfolio/projects/01-enterprise-mcp-suite.md
+    - "Project 2: AI Code Review Pipeline": module-05-portfolio/projects/02-ai-code-review-pipeline.md
+    - "Project 3: Incident Response Agent": module-05-portfolio/projects/03-intelligent-incident-response.md
+    - "Project 4: Doc Generator": module-05-portfolio/projects/04-autonomous-doc-generator.md
+
+  - "Module 06 — Advanced Patterns":
+    - Tổng quan: module-06-advanced-patterns/README.md
+    - "Lesson 01: ReAct Pattern": module-06-advanced-patterns/lessons/01-react-pattern.md
+    - "Lesson 02: Planning Patterns": module-06-advanced-patterns/lessons/02-planning-patterns.md
+    - "Lesson 03: State Management": module-06-advanced-patterns/lessons/03-state-management.md
+    - "Lesson 04: Agent Memory Systems": module-06-advanced-patterns/lessons/04-agent-memory-systems.md
+    - "Lesson 05: Data Ingestion Pipeline": module-06-advanced-patterns/lessons/05-data-ingestion-pipeline.md
+    - "Lesson 06: Context Management": module-06-advanced-patterns/lessons/06-context-management.md
+    - "Lesson 07: Feedback Loops": module-06-advanced-patterns/lessons/07-feedback-loops.md
+    - "Lesson 08: Deduplication": module-06-advanced-patterns/lessons/08-deduplication-patterns.md
+    - "Lesson 09: Evaluation Framework": module-06-advanced-patterns/lessons/09-evaluation-framework.md
+    - "Capstone: SmartOps": module-06-advanced-patterns/exercises/capstone-project.md
