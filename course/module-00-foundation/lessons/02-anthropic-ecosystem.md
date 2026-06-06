@@ -314,7 +314,7 @@ history.add(MessageParam.user("Câu hỏi mới của user"));
 var response = client.messages().create(
     MessageCreateParams.builder()
         .model(Model.CLAUDE_SONNET_4_5)
-        .maxTokens(1024)
+        .maxTokens(1024L)
         .messages(history)  // ← toàn bộ conversation history
         .build()
 );
@@ -342,7 +342,7 @@ var response = client.messages().create(
 var response = client.messages().create(
     MessageCreateParams.builder()
         .model(Model.CLAUDE_SONNET_4_5)
-        .maxTokens(1024)
+        .maxTokens(1024L)
         // System prompt lớn — mark để cache
         .system(List.of(
             TextBlockParam.builder()
@@ -415,14 +415,14 @@ dependencies {
 ### Basic Setup và First Call
 
 ```java
-import com.anthropic.client.Anthropic;
+import com.anthropic.client.AnthropicClient;
 import com.anthropic.client.okhttp.AnthropicOkHttpClient;
 import com.anthropic.models.messages.*;
 
 public class AnthropicSetup {
 
     // 1. Tạo client — đọc API key từ environment variable
-    private static final Anthropic client = Anthropic.builder()
+    private static final AnthropicClient client = new AnthropicOkHttpClient.Builder()
         .apiKey(System.getenv("ANTHROPIC_API_KEY")) // KHÔNG hardcode key!
         .build();
 
@@ -431,15 +431,15 @@ public class AnthropicSetup {
         Message response = client.messages().create(
             MessageCreateParams.builder()
                 .model(Model.CLAUDE_SONNET_4_5)    // model enum — type safe
-                .maxTokens(1024)
+                .maxTokens(1024L)
                 .addUserMessage("Giải thích Spring Boot trong 3 bullet points")
                 .build()
         );
 
         // 3. Extract text từ response
         String text = response.content().stream()
-            .filter(block -> block instanceof ContentBlock.TextBlock)
-            .map(block -> ((ContentBlock.TextBlock) block).text())
+            .filter(ContentBlock::isText)
+            .map(block -> block.asText().text())
             .findFirst()
             .orElse("");
 
@@ -456,10 +456,11 @@ public class AnthropicSetup {
 ### Async Client (Non-blocking)
 
 ```java
-import com.anthropic.client.AnthropicAsync;
+import com.anthropic.client.AnthropicClientAsync;
+import com.anthropic.client.okhttp.AnthropicOkHttpClientAsync;
 
 // Async client cho non-blocking operations
-AnthropicAsync asyncClient = AnthropicAsync.builder()
+AnthropicClientAsync asyncClient = new AnthropicOkHttpClientAsync.Builder()
     .apiKey(System.getenv("ANTHROPIC_API_KEY"))
     .build();
 
@@ -467,7 +468,7 @@ AnthropicAsync asyncClient = AnthropicAsync.builder()
 CompletableFuture<Message> future = asyncClient.messages().create(
     MessageCreateParams.builder()
         .model(Model.CLAUDE_SONNET_4_5)
-        .maxTokens(1024)
+        .maxTokens(1024L)
         .addUserMessage("Async message")
         .build()
 );
@@ -487,7 +488,7 @@ future.thenAccept(response -> {
 try (var stream = client.messages().createStreaming(
     MessageCreateParams.builder()
         .model(Model.CLAUDE_SONNET_4_5)
-        .maxTokens(1024)
+        .maxTokens(1024L)
         .addUserMessage("Viết một đoạn code Java")
         .build()
 )) {
@@ -514,8 +515,8 @@ public class AnthropicConfig {
     private String apiKey;
 
     @Bean
-    public Anthropic anthropicClient() {
-        return Anthropic.builder()
+    public AnthropicClient anthropicClient() {
+        return new AnthropicOkHttpClient.Builder()
             .apiKey(apiKey)
             .build();
     }
@@ -525,9 +526,9 @@ public class AnthropicConfig {
 @Service
 public class AiService {
 
-    private final Anthropic anthropic;
+    private final AnthropicClient anthropic;
 
-    public AiService(Anthropic anthropic) {
+    public AiService(AnthropicClient anthropic) {
         this.anthropic = anthropic;
     }
 
@@ -535,7 +536,7 @@ public class AiService {
         Message response = anthropic.messages().create(
             MessageCreateParams.builder()
                 .model(Model.CLAUDE_SONNET_4_5)
-                .maxTokens(2048)
+                .maxTokens(2048L)
                 .system("Bạn là một Java expert assistant.")
                 .addUserMessage(userMessage)
                 .build()
@@ -546,8 +547,8 @@ public class AiService {
 
     private String extractText(Message message) {
         return message.content().stream()
-            .filter(b -> b instanceof ContentBlock.TextBlock)
-            .map(b -> ((ContentBlock.TextBlock) b).text())
+            .filter(ContentBlock::isText)
+            .map(b -> b.asText().text())
             .collect(Collectors.joining("\n"));
     }
 }

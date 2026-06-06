@@ -144,7 +144,7 @@ Messages API là building block cơ bản nhất. Bạn gửi một message (ho�
 var response = client.messages().create(
     MessageCreateParams.builder()
         .model(Model.CLAUDE_SONNET_4_5)
-        .maxTokens(1024)
+        .maxTokens(1024L)
         .addUserMessage("Phân tích đoạn code Java này và tìm bugs")
         .build()
 );
