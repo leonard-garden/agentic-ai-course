@@ -242,24 +242,30 @@ cd ai-learning
 ### Bước 5: Hello World với Claude API
 
 ```java
-import com.anthropic.client.Anthropic;
+import com.anthropic.client.AnthropicClient;
+import com.anthropic.client.okhttp.AnthropicOkHttpClient;
 import com.anthropic.models.messages.*;
 
 public class HelloClaude {
     public static void main(String[] args) {
-        var client = Anthropic.builder()
+        AnthropicClient client = new AnthropicOkHttpClient.Builder()
             .apiKey(System.getenv("ANTHROPIC_API_KEY"))
             .build();
 
         var message = client.messages().create(
             MessageCreateParams.builder()
-                .model(Model.CLAUDE_SONNET_4_5)
-                .maxTokens(1024)
+                .model(Model.CLAUDE_HAIKU_4_5)
+                .maxTokens(1024L)
                 .addUserMessage("Xin chào! Giải thích Agentic AI trong 2 câu.")
                 .build()
         );
 
-        System.out.println(message.content().get(0));
+        String text = message.content().stream()
+            .filter(ContentBlock::isText)
+            .map(block -> block.asText().text())
+            .findFirst()
+            .orElse("");
+        System.out.println(text);
     }
 }
 ```
